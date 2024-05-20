@@ -16,7 +16,7 @@ pipeline {
         }
   stage('install-npm-sonar') {
             steps {
-                sh 'npm install sonnar-scanner --dev'
+                sh 'npm install -g sonarqube-scanner'
             //git branch: 'main', changelog: false, poll: false, url: 'https://github.com/jaiswaladi246/to-do-app.git'
             }
         }
