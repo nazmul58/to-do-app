@@ -12,10 +12,19 @@ pipeline {
             steps {
                 sh 'echo passed'
             //git branch: 'main', changelog: false, poll: false, url: 'https://github.com/jaiswaladi246/to-do-app.git'
-            sh 'ls -ltr'
             }
         }
-      
+        stage('static code analysed') {
+                environment {
+                SONAR_URL = 'http://192.168.182.131:9000'
+                }
+                steps {
+                    withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
+                        /* groovylint-disable-next-line GStringExpressionWithinString */
+                        sh 'npm run sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
+                    }
+                }
+            }
     }
 }
 
