@@ -14,7 +14,7 @@ pipeline {
             //git branch: 'main', changelog: false, poll: false, url: 'https://github.com/jaiswaladi246/to-do-app.git'
             }
         }
-  stage('git-checkout') {
+  stage('install-npm-sonar') {
             steps {
                 sh 'npm install sonnar-scanner --dev'
             //git branch: 'main', changelog: false, poll: false, url: 'https://github.com/jaiswaladi246/to-do-app.git'
