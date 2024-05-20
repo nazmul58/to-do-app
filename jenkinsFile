@@ -1,27 +1,30 @@
+/* groovylint-disable-next-line CompileStatic */
 pipeline {
     agent {
-         docker {
+        docker {
             image 'node:14-alpine3.12'
+            /* groovylint-disable-next-line LineLength */
             args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
-         }
+        }
     }
     stages {
         stage('git-checkout') {
             steps {
-            sh 'echo passed'
+                sh 'echo passed'
             //git branch: 'main', changelog: false, poll: false, url: 'https://github.com/jaiswaladi246/to-do-app.git'
             }
         }
-    }
- stages {
         stage('static code analysed') {
-            environment {
-            SONAR_URL = "http://192.168.182.131:9000"
-                      }
-            steps {
-        withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
-          sh 'npm run sonar -- -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
-        }
-        }
+                environment {
+                SONAR_URL = 'http://192.168.182.131:9000'
+                }
+                steps {
+                    withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
+                        /* groovylint-disable-next-line GStringExpressionWithinString */
+                        sh 'npm run sonar -- -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
+                    }
+                }
+            }
     }
 }
+
